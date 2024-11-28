@@ -1,5 +1,5 @@
 <div style="text-align: center;">
-    <img src="image 3.jpg" alt="Banner" ">
+    <img src="image 3.avif" alt="Banner" ">
 </div>
 
 # CSE 307 CA 2 (Project Report)
