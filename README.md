@@ -32,15 +32,15 @@ The lending protocol is implemented with the following key principles:
 pragma solidity ^0.8.0;
 
 contract SecureLendingProtocol {
-    mapping(address => uint256) public deposits; // Tracks user deposits
-    mapping(address => uint256) public debts;    // Tracks user debts
-    uint256 public totalDeposits;                // Total deposits in the protocol
+    mapping(address => uint256) public deposits; 
+    mapping(address => uint256) public debts;    
+    uint256 public totalDeposits;                
 
     event Deposit(address indexed user, uint256 amount);
     event Borrow(address indexed user, uint256 amount);
     event Repay(address indexed user, uint256 amount);
 
-    /// @notice Allows a user to deposit Ether
+    
     function deposit() public payable {
         require(msg.value > 0, "Deposit must be greater than zero");
         deposits[msg.sender] += msg.value;
@@ -48,8 +48,6 @@ contract SecureLendingProtocol {
         emit Deposit(msg.sender, msg.value);
     }
 
-    /// @notice Allows a user to borrow Ether up to their deposited collateral
-    /// @param amount Amount to borrow
     function borrow(uint256 amount) public {
         require(amount > 0, "Borrow amount must be greater than zero");
         require(deposits[msg.sender] >= amount, "Insufficient collateral");
@@ -64,7 +62,6 @@ contract SecureLendingProtocol {
         emit Borrow(msg.sender, amount);
     }
 
-    /// @notice Allows a user to repay their debt
     function repay() public payable {
         require(msg.value > 0, "Repay amount must be greater than zero");
         require(debts[msg.sender] >= msg.value, "Repay exceeds debt");
@@ -75,9 +72,6 @@ contract SecureLendingProtocol {
         emit Repay(msg.sender, msg.value);
     }
 
-    /// @notice Returns the net balance of a user (deposits minus debts)
-    /// @param user Address of the user
-    /// @return The net balance
     function netBalance(address user) public view returns (uint256) {
         return deposits[user] > debts[user] ? deposits[user] - debts[user] : 0;
     }
